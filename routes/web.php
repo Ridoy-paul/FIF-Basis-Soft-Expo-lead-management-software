@@ -62,8 +62,8 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
 
-    //subject Start
-    Route::group(['prefix'=>'student', 'as'=>'student.'], function() {
+    //visitor Start
+    Route::group(['prefix'=>'visitor', 'as'=>'visitor.'], function() {
         Route::get('/register-student', [StudentInfoController::class, 'create'])->name('create');
         Route::get('/all-student', [StudentInfoController::class, 'index'])->name('index');
         Route::get('/all-student_data', [StudentInfoController::class, 'index_data'])->name('index.data');

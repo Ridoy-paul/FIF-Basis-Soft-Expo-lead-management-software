@@ -11,7 +11,7 @@
                 <i class="fa fa-fw fa-ellipsis-v"></i>
             </button>
 
-            <a type="button" href="{{route('student.create')}}" class="btn btn-sm btn-success mr-2 d-lg-inline-block">Register Student</a>
+            <a type="button" href="{{route('visitor.create')}}" class="btn btn-sm btn-rounded btn-success mr-2 d-lg-inline-block">Register Visitor</a>
             
         </div>
         <div class="d-flex align-items-center">

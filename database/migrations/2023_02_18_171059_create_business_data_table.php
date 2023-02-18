@@ -21,6 +21,7 @@ class CreateBusinessDataTable extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->mediumText('address')->nullable();
+            $table->string('interested_service')->nullable();
             $table->integer('added_by')->nullable();
             $table->timestamps();
         });

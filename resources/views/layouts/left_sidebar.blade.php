@@ -4,7 +4,7 @@
             <span class="smini-visible">
                 <i class="fa fa-circle-notch text-primary"></i>
             </span>
-            <span class="smini-hide font-size-h5 tracking-wider">IT Learning Zone<span class="font-w400"></span>
+            <span class="smini-hide font-size-h5 tracking-wider">FIF, Basis Soft Expo.<span class="font-w400"></span>
             </span>
         </a>
         
@@ -31,7 +31,7 @@
                     <span class="nav-main-link-name"><span class="rounded p-1 ">CRM</span></span>
                 </a>
             </li>
-            
+            {{--
             <li class="nav-main-item">
                 <a class="nav-main-link active" href="{{route('institute.index')}}">
                     <i class="nav-main-link-icon fas fa-plane"></i>
@@ -45,20 +45,21 @@
                     <span class="nav-main-link-name"><span class="rounded p-1 ">Subjects</span></span>
                 </a>
             </li>
+            --}}
             @elseif ($user->type == 'crm')
 
             @endif
             
             <li class="nav-main-item">
-                <a class="nav-main-link active" href="{{route('student.create')}}">
+                <a class="nav-main-link active" href="{{route('visitor.create')}}">
                     <i class="nav-main-link-icon fas fa-id-card-alt"></i>
-                    <span class="nav-main-link-name"><span class="rounded p-1 ">Register Student</span></span>
+                    <span class="nav-main-link-name"><span class="rounded p-1 ">Register Visitor</span></span>
                 </a>
             </li>
             <li class="nav-main-item">
-                <a class="nav-main-link active" href="{{route('student.index')}}">
+                <a class="nav-main-link active" href="{{route('visitor.index')}}">
                     <i class="nav-main-link-icon fa fa-file"></i>
-                    <span class="nav-main-link-name"><span class="rounded p-1 ">All Students</span></span>
+                    <span class="nav-main-link-name"><span class="rounded p-1 ">All Visitors</span></span>
                 </a>
             </li>
             </ul>

@@ -6,7 +6,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-        <title>IT Learning Zone</title>
+        <title>FARA IT LTD.</title>
         <meta name="description" content="Ridoy Paul">
         <meta name="author" content="pixelcave">
         <meta name="robots" content="noindex, nofollow">

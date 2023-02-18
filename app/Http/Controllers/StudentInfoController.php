@@ -82,6 +82,7 @@ class StudentInfoController extends Controller
         return view('pages.students.create', compact('subjects', 'institutes'));
     }
 
+    
     /**
      * Store a newly created resource in storage.
      *
