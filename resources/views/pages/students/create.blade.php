@@ -37,14 +37,19 @@
                             <input type="email" class="form-control" id="" value="{{old('email')}}" name="email">
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <label for="example-text-input">Address</label>
-                            <textarea name="address" id="" class="form-control" cols="30" rows="2">{{old('address')}}</textarea>
+                            <label for="example-text-input">Company Name</label>
+                            <input type="text" class="form-control" id="" value="{{old('company_name')}}" name="company_name">
                         </div>
                     </div>
-                    
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="example-text-input">Designation</label>
+                            <input type="text" class="form-control" id="" value="{{old('designation')}}" name="designation">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="example-text-input">Interested Service</label>
                             <select name="interested_service" class="form-control" id="">
@@ -59,6 +64,22 @@
                             </select>
                         </div>
                     </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="example-text-input">Address</label>
+                            <textarea name="address" id="" class="form-control" cols="30" rows="2">{{old('address')}}</textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="example-text-input">Note</label>
+                            <textarea name="note" id="" class="form-control" cols="30" rows="2">{{old('note')}}</textarea>
+                        </div>
+                    </div>
+                    
+                    
+                    
                 </div>
                 <div class="block-content block-content-full text-right">
                     <button type="submit" class="btn btn-primary">Submit</button>
