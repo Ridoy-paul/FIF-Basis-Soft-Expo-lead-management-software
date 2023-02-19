@@ -99,9 +99,12 @@ class StudentInfoController extends Controller
             'name' => $name,
             'email' => $email,
         ];
-    
         $mail_status = Mail::send(new SendMail($name, $email));
         return $mail_status;
+    }
+
+    public function send_whatsapp_mesage() {
+        $send_sms = BusinessData::send_whatsapp();
     }
 
     /**
@@ -116,6 +119,9 @@ class StudentInfoController extends Controller
             return redirect()->back()->with('error', 'You can not access this page.');
         }
 
+        return $this->send_whatsapp_mesage();
+        return 0;
+
         $validator = Validator::make($request->all(), [
             'phone' => 'required|unique:business_data',            
         ]);
@@ -123,12 +129,6 @@ class StudentInfoController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
-        if($request->email <> '') {
-            return $this->send_email($request->name, $request->email);
-        }
-
-        return 0;
 
         $data = new BusinessData;
         $data->name = $request->name;
@@ -144,9 +144,9 @@ class StudentInfoController extends Controller
         $data->created_at = Carbon::now();
         $status = $data->save();
         if($status) {
-            //$this->send_sms($request->phone, $request->name);
+            $this->send_sms($request->phone, $request->name);
             if($request->email <> '') {
-                return $this->send_email($request->name, $request->email);
+                $this->send_email($request->name, $request->email);
             }
         }
 
