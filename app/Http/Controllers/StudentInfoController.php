@@ -176,7 +176,7 @@ class StudentInfoController extends Controller
             }
         }
 
-        return redirect()->route('visitor.index')->with('success', 'Registion Complete.');
+        return redirect()->route('visitor.create')->with('success', 'Registion Complete.');
 
     }
 
