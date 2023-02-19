@@ -12,6 +12,10 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Carbon;
 use DataTables;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMail;
+
+
 class StudentInfoController extends Controller
 {
 
@@ -91,7 +95,13 @@ class StudentInfoController extends Controller
     }
 
     public function send_email($name, $email) {
-
+        $details = [
+            'name' => $name,
+            'email' => $email,
+        ];
+    
+        $mail_status = Mail::send(new SendMail($name, $email));
+        return $mail_status;
     }
 
     /**
@@ -114,6 +124,12 @@ class StudentInfoController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        if($request->email <> '') {
+            return $this->send_email($request->name, $request->email);
+        }
+
+        return 0;
+
         $data = new BusinessData;
         $data->name = $request->name;
         $data->company_name = $request->company_name;
@@ -128,7 +144,10 @@ class StudentInfoController extends Controller
         $data->created_at = Carbon::now();
         $status = $data->save();
         if($status) {
-            $this->send_sms($request->phone, $request->name);
+            //$this->send_sms($request->phone, $request->name);
+            if($request->email <> '') {
+                return $this->send_email($request->name, $request->email);
+            }
         }
 
         return redirect()->route('visitor.index')->with('success', 'Registion Complete.');
