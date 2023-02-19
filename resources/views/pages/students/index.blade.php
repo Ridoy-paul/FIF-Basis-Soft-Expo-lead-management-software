@@ -48,7 +48,7 @@
         serverSide: true,
         ajax: "{{ route('visitor.index.data') }}",
         columns: [
-            {data: 'student_info', name: 'student_info'},
+            {data: 'visitor_info', name: 'visitor_info'},
             {data: 'added_by', name: 'added_by'},
             {data: 'action', name: 'action'},
         ],

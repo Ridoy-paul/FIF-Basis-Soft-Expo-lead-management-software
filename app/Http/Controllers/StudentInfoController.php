@@ -54,14 +54,14 @@ class StudentInfoController extends Controller
                 ->addColumn('action', function($row){
                     return '<a href="'.route('visitor.edit', $row->id).'"   class="btn btn-primary btn-sm">Edit</a>';
                 })
-                ->addColumn('student_info', function($row){
+                ->addColumn('visitor_info', function($row){
                     return '<span>'.$row->name.', [ '.$row->phone.', '.optional($row)->email.' ]<br>'.optional($row)->address.'</span>';
                 })
                 ->addColumn('added_by', function($row){
-                    return '<span>'.optional($row->added_by_info)->name.'<br><b>Time: </b>'.date("d-m-Y h:i:s A", strtotime($row->date)).'</span>';
+                    return '<span>'.optional($row->added_by_info)->name.'<br>'.date("d-m-Y h:i:s A", strtotime($row->created_at)).'</span>';
                 })
                 
-                ->rawColumns(['action', 'student_info', 'added_by'])
+                ->rawColumns(['action', 'visitor_info', 'added_by'])
                 ->make(true);
         }
       
@@ -83,7 +83,17 @@ class StudentInfoController extends Controller
         return view('pages.students.create');
     }
 
-    
+
+    public function send_sms($number, $name) {
+        $msg = 'Thank you Mr. '.$name.', for visiting Fara IT Limited at Basis Softexpo. For any kind of query please visit: www.faraitltd.com or call our hotline: 01780504501';
+        $send_sms = BusinessData::send_sms($msg, $number);
+        //return $send_sms;
+    }
+
+    public function send_email($name, $email) {
+
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -116,7 +126,11 @@ class StudentInfoController extends Controller
         $data->note = $request->note;
         $data->added_by = Auth::user()->id;
         $data->created_at = Carbon::now();
-        $data->save();
+        $status = $data->save();
+        if($status) {
+            $this->send_sms($request->phone, $request->name);
+        }
+
         return redirect()->route('visitor.index')->with('success', 'Registion Complete.');
 
     }
@@ -166,7 +180,7 @@ class StudentInfoController extends Controller
         $student = StudentInfo::find($id);
 
         $validator = Validator::make($request->all(), [
-            'phone' => 'required|unique:student_infos,phone,'.$student->id,
+            'phone' => 'required|unique:visitor_infos,phone,'.$student->id,
         ]);
     
         if ($validator->fails()) {
