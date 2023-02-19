@@ -64,12 +64,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     //visitor Start
     Route::group(['prefix'=>'visitor', 'as'=>'visitor.'], function() {
-        Route::get('/register-student', [StudentInfoController::class, 'create'])->name('create');
-        Route::get('/all-student', [StudentInfoController::class, 'index'])->name('index');
-        Route::get('/all-student_data', [StudentInfoController::class, 'index_data'])->name('index.data');
+        Route::get('/register-visitor', [StudentInfoController::class, 'create'])->name('create');
+        Route::get('/all-visitor', [StudentInfoController::class, 'index'])->name('index');
+        Route::get('/all-visitor_data', [StudentInfoController::class, 'index_data'])->name('index.data');
+        Route::get('/send/{what}/{id}', [StudentInfoController::class, 'send_individual_message'])->name('send.message');
         
         Route::post('/store', [StudentInfoController::class, 'store'])->name('store');
-        Route::get('/edit-student/{id}', [StudentInfoController::class, 'edit'])->name('edit');
+        Route::get('/edit-visitor/{id}', [StudentInfoController::class, 'edit'])->name('edit');
         Route::post('/update/{id}', [StudentInfoController::class, 'update'])->name('update');
     });
     //subject End

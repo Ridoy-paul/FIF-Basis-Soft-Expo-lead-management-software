@@ -57,17 +57,19 @@ class StudentInfoController extends Controller
 
             return Datatables::of($data)
                 ->addIndexColumn()
-                ->addColumn('action', function($row){
-                    return '<a href="'.route('visitor.edit', $row->id).'"   class="btn btn-primary btn-sm">Edit</a>';
-                })
+                // ->addColumn('action', function($row){
+                //     return '<a href="'.route('visitor.edit', $row->id).'"   class="btn btn-primary btn-sm">Edit</a> <a href="'.route('visitor.send.message', ['what'=>'whatsapp', 'id'=>$row->id]).'"   class="btn btn-success btn-rounded btn-sm"><i class="nav-main-link-icon fab fa-whatsapp"></i></a> <a href="'.route('visitor.send.message', ['what'=>'sms', 'id'=>$row->id]).'"   class="btn btn-warning btn-rounded btn-sm"><i class="nav-main-link-icon fas fa-sms"></i></a> <a href="'.route('visitor.send.message', ['what'=>'mail', 'id'=>$row->id]).'"   class="btn btn-dark btn-rounded btn-sm"><i class="nav-main-link-icon fas fa-envelope"></i></a>';
+                // })
                 ->addColumn('visitor_info', function($row){
-                    return '<span>'.$row->name.', [ '.$row->phone.', '.optional($row)->email.' ]<br>'.optional($row)->address.'</span>';
+                    $output = '<span>'.$row->name.', [ '.$row->phone.', '.optional($row)->email.' ]<br>'.optional($row)->address.'</span>';
+                    $output .= '<br><a href="'.route('visitor.edit', $row->id).'" class="btn btn-primary btn-rounded btn-sm"><i class="fas fa-edit"></i></a> <a href="'.route('visitor.send.message', ['what'=>'whatsapp', 'id'=>$row->id]).'"   class="btn btn-success btn-rounded btn-sm"><i class="nav-main-link-icon fab fa-whatsapp"></i></a> <a href="'.route('visitor.send.message', ['what'=>'sms', 'id'=>$row->id]).'"   class="btn btn-warning btn-rounded btn-sm"><i class="nav-main-link-icon fas fa-sms"></i></a> <a href="'.route('visitor.send.message', ['what'=>'mail', 'id'=>$row->id]).'"   class="btn btn-dark btn-rounded btn-sm"><i class="nav-main-link-icon fas fa-envelope"></i></a>';
+                    return $output;
                 })
                 ->addColumn('added_by', function($row){
                     return '<span>'.optional($row->added_by_info)->name.'<br>'.date("d-m-Y h:i:s A", strtotime($row->created_at)).'</span>';
                 })
                 
-                ->rawColumns(['action', 'visitor_info', 'added_by'])
+                ->rawColumns([ 'visitor_info', 'added_by'])
                 ->make(true);
         }
       
@@ -105,17 +107,17 @@ class StudentInfoController extends Controller
         return $mail_status;
     }
 
-    public function whatsappNotification(string $recipient)
-    {
-        $sid    = getenv("TWILIO_AUTH_SID");
-        $token  = getenv("TWILIO_AUTH_TOKEN");
-        $wa_from= getenv("TWILIO_WHATSAPP_FROM");
-        $twilio = new Client($sid, $token);
+    // public function whatsappNotification(string $recipient)
+    // {
+    //     $sid    = getenv("TWILIO_AUTH_SID");
+    //     $token  = getenv("TWILIO_AUTH_TOKEN");
+    //     $wa_from= getenv("TWILIO_WHATSAPP_FROM");
+    //     $twilio = new Client($sid, $token);
         
-        $body = "Hello, welcome to codelapan.com.";
+    //     $body = "Hello, welcome to codelapan.com.";
 
-        return $twilio->messages->create("whatsapp:$recipient",["from" => "whatsapp:$wa_from", "body" => $body]);
-    }
+    //     return $twilio->messages->create("whatsapp:$recipient",["from" => "whatsapp:$wa_from", "body" => $body]);
+    // }
 
     public function send_whatsapp_mesage($name, $phone) {
 
@@ -131,9 +133,6 @@ class StudentInfoController extends Controller
                                     ) 
                             ); 
             
-            //print($message->sid);
-
-        //$send_sms = BusinessData::send_whatsapp();
     }
 
     /**
@@ -147,9 +146,6 @@ class StudentInfoController extends Controller
         if($this->check_authenticate() != true) {
             return redirect()->back()->with('error', 'You can not access this page.');
         }
-
-        return $this->send_whatsapp_mesage($request->name, $request->phone);
-        return 0;
 
         $validator = Validator::make($request->all(), [
             'phone' => 'required|unique:business_data',            
@@ -174,8 +170,9 @@ class StudentInfoController extends Controller
         $status = $data->save();
         if($status) {
             $this->send_sms($request->phone, $request->name);
+            $this->send_whatsapp_mesage($request->name, $request->phone);
             if($request->email <> '') {
-                $this->send_email($request->name, $request->email);
+               // $this->send_email($request->name, $request->email);
             }
         }
 
@@ -206,10 +203,8 @@ class StudentInfoController extends Controller
             return redirect()->back()->with('error', 'You can not access this page.');
         }
 
-        $subjects = Subjects::OrderBy('name', 'ASC')->get();
-        $institutes = Universities::OrderBy('name', 'ASC')->get();
-        $studentInfo = StudentInfo::find($id);
-        return view('pages.students.edit', compact('studentInfo', 'subjects', 'institutes'));
+        $studentInfo = BusinessData::find($id);
+        return view('pages.students.edit', compact('studentInfo'));
     }
 
     /**

@@ -22,7 +22,6 @@
               <tr>
                   <th>Visitor Info</th>
                   <th>Added By</th>
-                  <th>Action</th>
               </tr>
           </thead>
           <tbody>
@@ -50,7 +49,6 @@
         columns: [
             {data: 'visitor_info', name: 'visitor_info'},
             {data: 'added_by', name: 'added_by'},
-            {data: 'action', name: 'action'},
         ],
         "scrollY": "300px",
         "pageLength": 50,

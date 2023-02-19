@@ -18,8 +18,9 @@
             </div>
         </div>
 
+        
         <div class="px-2">
-            <form action="{{route('student.update', optional($studentInfo)->id)}}" class="shadow rounded p-3" method="post">
+            <form action="{{route('visitor.update', optional($studentInfo)->id)}}" class="shadow rounded p-3" method="post">
                 @csrf
                 <div class="font-size-sm row">
                 <div class="col-md-12">
