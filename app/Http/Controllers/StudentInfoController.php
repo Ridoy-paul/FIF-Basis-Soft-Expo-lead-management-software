@@ -43,19 +43,19 @@ class StudentInfoController extends Controller
         if ($request->ajax()) {
             $user = Auth::user();
             if($user->type == 'admin') {
-                $data = StudentInfo::orderBy('id', 'desc')->get();
+                $data = BusinessData::orderBy('id', 'desc')->get();
             }
             else {
-                $data = StudentInfo::Where('added_by', $user->id)->orderBy('id', 'desc')->get();
+                $data = BusinessData::Where('added_by', $user->id)->orderBy('id', 'desc')->get();
             }
 
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                    return '<a href="'.route('student.edit', $row->id).'"   class="btn btn-primary btn-sm">Edit</a>';
+                    return '<a href="'.route('visitor.edit', $row->id).'"   class="btn btn-primary btn-sm">Edit</a>';
                 })
                 ->addColumn('student_info', function($row){
-                    return '<span>'.$row->name.', [ '.$row->phone.', '.optional($row)->email.' ]<br>'.optional($row)->address.'<br><b>Subject: </b>'.optional($row->subject_info)->name.'<br><b>Class: </b>'.optional($row)->class_or_semester.'<br><b>Institute: </b>'.optional($row->institute_info)->name.'<br><span class="badge badge-primary">'.optional($row)->interested_course.'</span></span>';
+                    return '<span>'.$row->name.', [ '.$row->phone.', '.optional($row)->email.' ]<br>'.optional($row)->address.'</span>';
                 })
                 ->addColumn('added_by', function($row){
                     return '<span>'.optional($row->added_by_info)->name.'<br><b>Time: </b>'.date("d-m-Y h:i:s A", strtotime($row->date)).'</span>';
