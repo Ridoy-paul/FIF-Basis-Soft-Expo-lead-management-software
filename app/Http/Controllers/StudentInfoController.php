@@ -203,8 +203,8 @@ class StudentInfoController extends Controller
             return redirect()->back()->with('error', 'You can not access this page.');
         }
 
-        $studentInfo = BusinessData::find($id);
-        return view('pages.students.edit', compact('studentInfo'));
+        $visitor_info = BusinessData::find($id);
+        return view('pages.students.edit', compact('visitor_info'));
     }
 
     /**

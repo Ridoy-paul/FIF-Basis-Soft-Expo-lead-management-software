@@ -8,7 +8,7 @@
 <div class="content">
     <div class="block block-rounded">
         <div class="block-header">
-            <h4 class="mb-1">Update Student Info</h4>
+            <h4 class="mb-1">Update Visitor Info</h4>
         </div>
         <div class="row">
             <div class="col-md-12 text-danger">
@@ -18,104 +18,68 @@
             </div>
         </div>
 
-        
+
         <div class="px-2">
-            <form action="{{route('visitor.update', optional($studentInfo)->id)}}" class="shadow rounded p-3" method="post">
+            <form action="{{route('visitor.update', optional($visitor_info)->id)}}" class="shadow rounded p-3" method="post">
                 @csrf
                 <div class="font-size-sm row">
                 <div class="col-md-12">
                         <div class="form-group">
                             <label for="example-text-input"><span class="text-danger">*</span>Student Name</label>
-                            <input type="text" class="form-control" id="" value="{{optional($studentInfo)->name}}" required name="name">
+                            <input type="text" class="form-control" id="" value="{{optional($visitor_info)->name}}" required name="name">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="example-text-input"><span class="text-danger">*</span>Phone</label>
-                            <input type="number" class="form-control" id="" value="{{optional($studentInfo)->phone}}" required name="phone">
+                            <input type="number" class="form-control" id="" value="{{optional($visitor_info)->phone}}" required name="phone">
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="example-text-input">Email</label>
-                            <input type="email" class="form-control" id="" value="{{optional($studentInfo)->email}}" name="email">
+                            <input type="email" class="form-control" id="" value="{{optional($visitor_info)->email}}" name="email">
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <label for="example-text-input"><span class="text-danger">*</span>Address</label>
-                            <textarea name="address" id="" class="form-control" cols="30" required rows="2">{{optional($studentInfo)->address}}</textarea>
+                            <label for="example-text-input">Company Name</label>
+                            <input type="text" class="form-control" id="" value="{{optional($visitor_info)->company_name}}" name="company_name">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="example-text-input">Designation</label>
+                            <input type="text" class="form-control" id="" value="{{optional($visitor_info)->designation}}" name="designation">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="example-text-input">Interested Service</label>
+                            <select name="interested_service" class="form-control" id="">
+                                <option value="">-- Interested Service --</option>
+                                <option @if(optional($visitor_info)->interested_service == 'Website Solution') selected class="bg-success text-light" @endif value="Website Solution">Website Solution</option>
+                                <option @if(optional($visitor_info)->interested_service == 'POS') selected class="bg-success text-light" @endif value="POS">POS</option>
+                                <option @if(optional($visitor_info)->interested_service == 'School Management Software') selected class="bg-success text-light" @endif value="School Management Software">School Management Software</option>
+                                <option @if(optional($visitor_info)->interested_service == 'Digital Marketing') selected class="bg-success text-light" @endif value="Digital Marketing">Digital Marketing</option>
+                                <option @if(optional($visitor_info)->interested_service == 'Graphics Support') selected class="bg-success text-light" @endif value="Graphics Support">Graphics Support</option>
+                                <option @if(optional($visitor_info)->interested_service == 'Customized Software') selected class="bg-success text-light" @endif value="Customized Software">Customized Software</option>
+                                <option @if(optional($visitor_info)->interested_service == 'Others') selected class="bg-success text-light" @endif value="Others">Others</option>
+                            </select>
                         </div>
                     </div>
                     
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="example-text-input"><span class="text-danger">*</span>Class or Semester</label>
-                            <select name="class_or_semester" class="form-control" id="" required>
-                                <option value="">-- Select One --</option>
-                                <option @if(optional($studentInfo)->class_or_semester == 'SSC') selected class="text-light bg-success" @endif value="SSC">SSC</option>
-                                <option @if(optional($studentInfo)->class_or_semester == 'HSC') selected class="text-light bg-success" @endif value="HSC">HSC</option>
-                                <option @if(optional($studentInfo)->class_or_semester == '1st Year') selected class="text-light bg-success" @endif value="1st Year">1st Year</option>
-                                <option @if(optional($studentInfo)->class_or_semester == '2nd Year') selected class="text-light bg-success" @endif value="2nd Year">2nd Year</option>
-                                <option @if(optional($studentInfo)->class_or_semester == '3rd Year') selected class="text-light bg-success" @endif value="3rd Year">3rd Year</option>
-                                <option @if(optional($studentInfo)->class_or_semester == '4th Year') selected class="text-light bg-success" @endif value="4th Year">4th Year</option>
-                                <option @if(optional($studentInfo)->class_or_semester == '1st Semester') selected class="text-light bg-success" @endif value="1st Semester">1st Semester</option>
-                                <option @if(optional($studentInfo)->class_or_semester == '2nd Semester') selected class="text-light bg-success" @endif value="2nd Semester">2nd Semester</option>
-                                <option @if(optional($studentInfo)->class_or_semester == '3rd Semester') selected class="text-light bg-success" @endif value="3rd Semester">3rd Semester</option>
-                                <option @if(optional($studentInfo)->class_or_semester == '4th Semester') selected class="text-light bg-success" @endif value="4th Semester">4th Semester</option>
-                                <option @if(optional($studentInfo)->class_or_semester == '5th Semester') selected class="text-light bg-success" @endif value="5th Semester">5th Semester</option>
-                                <option @if(optional($studentInfo)->class_or_semester == '6th Semester') selected class="text-light bg-success" @endif value="6th Semester">6th Semester</option>
-                                <option @if(optional($studentInfo)->class_or_semester == '7th Semester') selected class="text-light bg-success" @endif value="7th Semester">7th Semester</option>
-                                <option @if(optional($studentInfo)->class_or_semester == '8th Semester') selected class="text-light bg-success" @endif value="8th Semester">8th Semester</option>
-                                <option @if(optional($studentInfo)->class_or_semester == '9th Semester') selected class="text-light bg-success" @endif value="9th Semester">9th Semester</option>
-                                <option @if(optional($studentInfo)->class_or_semester == '10th Semester') selected class="text-light bg-success" @endif value="10th Semester">10th Semester</option>
-                                <option @if(optional($studentInfo)->class_or_semester == '11th Semester') selected class="text-light bg-success" @endif value="11th Semester">11th Semester</option>
-                                <option @if(optional($studentInfo)->class_or_semester == '12th Semester') selected class="text-light bg-success" @endif value="12th Semester">12th Semester</option>
-                            </select>
+                            <label for="example-text-input">Address</label>
+                            <textarea name="address" id="" class="form-control" cols="30" rows="2">{{optional($visitor_info)->address}}</textarea>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="example-text-input"><span class="text-danger">*</span>Subject</label>
-                            <select name="subject_id" class="form-control" id="" required>
-                                <option value="">-- Select Subject --</option>
-                                @foreach ($subjects as $subject)
-                                <option @if(optional($studentInfo)->subject_id == $subject->id) selected class="text-light bg-success" @endif value="{{$subject->id}}">{{$subject->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group" id="instutions_div">
-                            <label for="example-text-input"><span class="text-danger">*</span>Institutoins</label>
-                            <select name="institute_id" class="form-control" id="institute_id" required>
-                                <option value="">-- Select Institute --</option>
-                                @foreach ($institutes as $institute)
-                                <option @if(optional($studentInfo)->institute_id == $institute->id) selected class="text-light bg-light" @endif value="{{$institute->id}}">{{$institute->name}}</option>
-                                @endforeach
-                                <option value="add_new">Add New</option>
-                            </select>
-                        </div>
-                        <div class="form-group" id="new_instutions_div" style="display: none;">
-                            <label for="example-text-input"><span class="text-danger">*</span>Institutoins Name</label>
-                            <input type="text" class="form-control" id="institute_name" name="institute_name">
-                        </div>
-                        
-                    </div>
-                    
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="example-text-input"><span class="text-danger">*</span>Interested Course</label>
-                            <select name="interested_course" class="form-control" id="" required>
-                                <option value="">-- Interested Course --</option>
-                                <option  @if(optional($studentInfo)->interested_course == 'Graphics Design') selected class="text-light bg-light" @endif value="Graphics Design">Graphics Design</option>
-                                <option  @if(optional($studentInfo)->interested_course == 'Web Design & Advance Wordpress') selected class="text-light bg-light" @endif  value="Web Design & Advance Wordpress">Web Design & Advance Wordpress</option>
-                                <option  @if(optional($studentInfo)->interested_course == 'Digital Marketing') selected class="text-light bg-light" @endif  value="Digital Marketing">Digital Marketing</option>
-                                <option  @if(optional($studentInfo)->interested_course == 'Web Development With Laravel') selected class="text-light bg-light" @endif  value="Web Development With Laravel">Web Development With Laravel</option>
-                                <option  @if(optional($studentInfo)->interested_course == 'Basic Computer') selected class="text-light bg-light" @endif  value="Basic Computer">Basic Computer</option>
-                            </select>
+                            <label for="example-text-input">Note</label>
+                            <textarea name="note" id="" class="form-control" cols="30" rows="2">{{optional($visitor_info)->note}}</textarea>
                         </div>
                     </div>
                 </div>
