@@ -13,14 +13,14 @@
     <div class="container p-4">
     <div class="row shadow rounded bg-light" style="padding-top:20px">
       <div class="col-md-10">
-      <h2>All Students</h2>
+      <h2>All Visitors Data</h2>
       </div>
       
       <div class="col-md-12 mb-3">
         <table class="table table-bordered data-table display nowrap">
           <thead>
               <tr>
-                  <th>Student Info</th>
+                  <th>Visitor Info</th>
                   <th>Added By</th>
                   <th>Action</th>
               </tr>
@@ -46,7 +46,7 @@
     var table = $('.data-table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ route('student.index.data') }}",
+        ajax: "{{ route('visitor.index.data') }}",
         columns: [
             {data: 'student_info', name: 'student_info'},
             {data: 'added_by', name: 'added_by'},

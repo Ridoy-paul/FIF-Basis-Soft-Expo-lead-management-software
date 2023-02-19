@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BusinessData;
 use App\Models\StudentInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -77,9 +78,9 @@ class StudentInfoController extends Controller
             return redirect()->back()->with('error', 'You can not access this page.');
         }
 
-        $subjects = Subjects::OrderBy('name', 'ASC')->get();
-        $institutes = Universities::OrderBy('name', 'ASC')->get();
-        return view('pages.students.create', compact('subjects', 'institutes'));
+        //$subjects = Subjects::OrderBy('name', 'ASC')->get();
+        //$institutes = Universities::OrderBy('name', 'ASC')->get();
+        return view('pages.students.create');
     }
 
     
@@ -96,43 +97,27 @@ class StudentInfoController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'phone' => 'required|unique:student_infos',            
+            'phone' => 'required|unique:business_data',            
         ]);
     
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $student = new StudentInfo;
-        $student->name = $request->name;
-        $student->phone = $request->phone;
-        $student->email = $request->email;
-        $student->address = $request->address;
-        $student->subject_id = $request->subject_id;
-
-        if($request->institute_id == 'add_new' & $request->institute_name != '') {
-            $check_institute = Universities::Where('name', $request->institute_name)->first();
-            if(!is_null($check_institute)) {
-                $student->institute_id = $check_institute->id;
-            }
-            else {
-                $new_institute = new Universities;
-                $new_institute->name = $request->institute_name;
-                $new_institute->created_at = Carbon::now();
-                $new_institute->save();
-                $student->institute_id = $new_institute->id;
-            }
-        }
-        else {
-            $student->institute_id = $request->institute_id;
-        }
-
-        $student->class_or_semester = $request->class_or_semester;
-        $student->interested_course = $request->interested_course;
-        $student->added_by = Auth::user()->id;
-        $student->date = Carbon::now();
-        $student->save();
-        return redirect()->route('student.index')->with('success', 'Registion Complete.');
+        $data = new BusinessData;
+        $data->name = $request->name;
+        $data->company_name = $request->company_name;
+        $data->designation = $request->designation;
+        $data->phone = $request->phone;
+        $data->email = $request->email;
+        $data->address = $request->address;
+        $data->interested_service = $request->interested_service;
+        
+        $data->note = $request->note;
+        $data->added_by = Auth::user()->id;
+        $data->created_at = Carbon::now();
+        $data->save();
+        return redirect()->route('visitor.index')->with('success', 'Registion Complete.');
 
     }
 
