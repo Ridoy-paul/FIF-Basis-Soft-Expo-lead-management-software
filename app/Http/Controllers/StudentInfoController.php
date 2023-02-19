@@ -220,43 +220,28 @@ class StudentInfoController extends Controller
             return redirect()->back()->with('error', 'You can not access this page.');
         }
 
-        $student = StudentInfo::find($id);
+        $data = BusinessData::find($id);
 
         $validator = Validator::make($request->all(), [
-            'phone' => 'required|unique:visitor_infos,phone,'.$student->id,
+            'phone' => 'required|unique:business_data,phone,'.$data->id,
         ]);
     
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $student->name = $request->name;
-        $student->phone = $request->phone;
-        $student->email = $request->email;
-        $student->address = $request->address;
-        $student->subject_id = $request->subject_id;
+        $data->name = $request->name;
+        $data->company_name = $request->company_name;
+        $data->designation = $request->designation;
+        $data->phone = $request->phone;
+        $data->email = $request->email;
 
-        if($request->institute_id == 'add_new' & $request->institute_name != '') {
-            $check_institute = Universities::Where('name', $request->institute_name)->first();
-            if(!is_null($check_institute)) {
-                $student->institute_id = $check_institute->id;
-            }
-            else {
-                $new_institute = new Universities;
-                $new_institute->name = $request->institute_name;
-                $new_institute->created_at = Carbon::now();
-                $new_institute->save();
-                $student->institute_id = $new_institute->id;
-            }
-        }
-        else {
-            $student->institute_id = $request->institute_id;
-        }
-
-        $student->class_or_semester = $request->class_or_semester;
-        $student->interested_course = $request->interested_course;
-        $student->update();
-        return redirect()->route('student.index')->with('success', 'Student Info Updated.');
+        $data->address = $request->address;
+        $data->interested_service = $request->interested_service;
+        
+        $data->note = $request->note;
+        $data->update();
+        return redirect()->route('visitor.index')->with('success', 'Visitor Info Updated.');
     }
 
     /**
