@@ -42,7 +42,7 @@ class BusinessData extends Model
     }
 
     public static function send_whatsapp() {
-                
+        
         $phone='+8801880884848';
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -66,7 +66,7 @@ class BusinessData extends Model
             }
         }',
         CURLOPT_HTTPHEADER => array(
-            'Authorization: Bearer your_token',
+            'Authorization: Bearer EAAWMZCLo6xD8BAKSlWk8mLcp4UEZC1ENlIw0RNRSDMV3x2T5daepqr81ZCUC4eOBA1LaziViZC09mVZCucHgXxrqEbYx9J8LHRuJGXgrkptiXAEaqv2fzbxlVM6AjKEvq9QZAo2ghLE6eAwepmma7t0vgdYIXtgBv5fqsrUrE1ZBuNoKjUQ7yblDZAiA1cAYqywBeHbI8ZCbjQwZDZD',
             'Content-Type: application/json'
         ),
         ));

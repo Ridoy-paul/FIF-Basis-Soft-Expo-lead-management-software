@@ -14,6 +14,8 @@ use Illuminate\Support\Carbon;
 use DataTables;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMail;
+use Twilio\Rest\Client;
+//require_once "Twilio/autoload.php";
 
 
 class StudentInfoController extends Controller
@@ -103,8 +105,35 @@ class StudentInfoController extends Controller
         return $mail_status;
     }
 
-    public function send_whatsapp_mesage() {
-        $send_sms = BusinessData::send_whatsapp();
+    public function whatsappNotification(string $recipient)
+    {
+        $sid    = getenv("TWILIO_AUTH_SID");
+        $token  = getenv("TWILIO_AUTH_TOKEN");
+        $wa_from= getenv("TWILIO_WHATSAPP_FROM");
+        $twilio = new Client($sid, $token);
+        
+        $body = "Hello, welcome to codelapan.com.";
+
+        return $twilio->messages->create("whatsapp:$recipient",["from" => "whatsapp:$wa_from", "body" => $body]);
+    }
+
+    public function send_whatsapp_mesage($name, $phone) {
+
+            $sid    = env("TWILIO_AUTH_SID"); 
+            $token  = env("TWILIO_AUTH_TOKEN"); 
+            $twilio = new Client($sid, $token); 
+            
+            $message = $twilio->messages 
+                            ->create("whatsapp:+88".$phone, // to 
+                                    array( 
+                                        "from" => "whatsapp:+14155238886",       
+                                        "body" => "Thank you Mr. ".$name.", for visiting Fara IT Limited at Basis Softexpo. For any kind of query please visit: www.faraitltd.com or call our hotline: 01780504501." 
+                                    ) 
+                            ); 
+            
+            //print($message->sid);
+
+        //$send_sms = BusinessData::send_whatsapp();
     }
 
     /**
@@ -119,7 +148,7 @@ class StudentInfoController extends Controller
             return redirect()->back()->with('error', 'You can not access this page.');
         }
 
-        return $this->send_whatsapp_mesage();
+        return $this->send_whatsapp_mesage($request->name, $request->phone);
         return 0;
 
         $validator = Validator::make($request->all(), [
