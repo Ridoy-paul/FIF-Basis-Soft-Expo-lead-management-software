@@ -103,7 +103,7 @@ class StudentInfoController extends Controller
             'name' => $name,
             'email' => $email,
         ];
-        $mail_status = Mail::send(new SendMail($name, $email));
+        $mail_status = Mail::send(new SendMail($details));
         return $mail_status;
     }
 
@@ -178,6 +178,35 @@ class StudentInfoController extends Controller
 
         return redirect()->route('visitor.index')->with('success', 'Registion Complete.');
 
+    }
+
+    public function send_individual_message($what, $id) {
+        if($this->check_authenticate() != true) {
+            return redirect()->back()->with('error', 'You can not access this page.');
+        }
+
+        $visitor_info = BusinessData::find($id);
+        if(is_null($visitor_info)) {
+            return redirect()->back()->with('error', 'Invalid visitor info.');
+        }
+
+        if($what == 'whatsapp') {
+            $this->send_whatsapp_mesage($visitor_info->name, $visitor_info->phone);
+            return redirect()->back()->with('success', 'WhatsApp message sent successfully.');
+        }
+        else if($what == 'mail') {
+            if($visitor_info->email <> null) {
+                $this->send_email($visitor_info->name, $visitor_info->email);
+                return redirect()->back()->with('success', 'Email sent successfully.');
+            }
+            else {
+                return redirect()->back()->with('error', 'No Email Found!');
+            }
+        }
+        else if($what == 'sms') {
+            $this->send_sms($visitor_info->phone, $visitor_info->name);
+            return redirect()->back()->with('success', 'SMS sent successfully.');
+        }
     }
 
     /**
