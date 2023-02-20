@@ -103,7 +103,7 @@ class StudentInfoController extends Controller
             'name' => $name,
             'email' => $email,
         ];
-        $mail_status = Mail::send(new SendMail($details));
+        $mail_status = Mail::to($email)->send(new SendMail($details));
         return $mail_status;
     }
 
@@ -172,7 +172,7 @@ class StudentInfoController extends Controller
             $this->send_sms($request->phone, $request->name);
             $this->send_whatsapp_mesage($request->name, $request->phone);
             if($request->email <> '') {
-               // $this->send_email($request->name, $request->email);
+                $this->send_email($request->name, $request->email);
             }
         }
 

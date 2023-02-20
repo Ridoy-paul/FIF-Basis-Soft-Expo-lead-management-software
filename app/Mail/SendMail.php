@@ -33,9 +33,9 @@ class SendMail extends Mailable
         //return $this->view('view.name');
 
         //$data = $this->email;
-        return $this->subject('ddd')
+        return $this->subject('Basis Softexpo.')
                     //->from($this->email->email, $this->email->name)
-                    ->to('cse.ridoypaul@gmail.com', env('APP_NAME'))
+                    //->to($this->$details['email'], env('APP_NAME'))
                     ->view('emails.send_mail');
     }
 }
